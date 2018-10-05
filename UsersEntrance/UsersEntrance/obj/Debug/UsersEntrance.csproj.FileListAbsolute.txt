@@ -1,0 +1,9 @@
+C:\UsersEntrace\UsersEntrance\UsersEntrance\bin\Debug\UsersEntrance.exe.config
+C:\UsersEntrace\UsersEntrance\UsersEntrance\bin\Debug\UsersEntrance.exe
+C:\UsersEntrace\UsersEntrance\UsersEntrance\bin\Debug\UsersEntrance.pdb
+C:\UsersEntrace\UsersEntrance\UsersEntrance\bin\Debug\Dapper.dll
+C:\UsersEntrace\UsersEntrance\UsersEntrance\bin\Debug\Dapper.xml
+C:\UsersEntrace\UsersEntrance\UsersEntrance\obj\Debug\UsersEntrance.csprojResolveAssemblyReference.cache
+C:\UsersEntrace\UsersEntrance\UsersEntrance\obj\Debug\UsersEntrance.csproj.CoreCompileInputs.cache
+C:\UsersEntrace\UsersEntrance\UsersEntrance\obj\Debug\UsersEntrance.exe
+C:\UsersEntrace\UsersEntrance\UsersEntrance\obj\Debug\UsersEntrance.pdb
