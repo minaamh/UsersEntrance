@@ -31,22 +31,22 @@ namespace UsersEntrance
 
         internal void MakeEntry(string connectionString)
         {
-            string insertQuery = $"INSERT INTO [UsersEntrance].[dbo].[UsersEntrance]([UserID], [FirstName], [LastName], [Gate], [TimeStamp]) VALUES ({this.UserID}, '{this.Firstname}', '{this.Lastname}', {this.Gate}, '{DateTime.Now.ToString("yyyy-MM-ddTHH:mm:sszzz")}')";
+            string insertQuery = $"INSERT INTO [UsersEntrance].[dbo].[UsersEntrance]([UserID], [Gate], [TimeStamp]) VALUES ({this.UserID}, {this.Gate}, '{DateTime.Now.ToString("yyyy-MM-ddTHH:mm:sszzz")}')";
 
             using (var connection = new SqlConnection(connectionString))
             {
-                var result = connection.Execute(insertQuery);
+                connection.Execute(insertQuery);
             }
         }
 
         internal void ExtractID(string connectionString)
         {
             Console.WriteLine("Please enter your First Name");
-            this.Firstname = Console.ReadLine().ToUpper();
+            this.Firstname = Console.ReadLine();
             Console.WriteLine("Please enter your Last Name");
-            this.Lastname = Console.ReadLine().ToUpper();
+            this.Lastname = Console.ReadLine();
 
-            string query = $"SELECT TOP 1 [UserID]  FROM [UsersEntrance].[dbo].[UsersEntrance] where [FirstName] = '{this.Firstname}' and [LastName] = '{this.Lastname}'";
+            string query = $"SELECT TOP 1 [UserID]  FROM [UsersEntrance].[dbo].[Users] where [FirstName] = '{this.Firstname}' and [LastName] = '{this.Lastname}'";
             using (var connection = new SqlConnection(connectionString))
             {
                 if (connection.Query<int>(query).ToArray().Length!=0)
