@@ -36,7 +36,6 @@ namespace UsersEntrance
             using (var connection = new SqlConnection(connectionString))
             {
                 var result = connection.Execute(insertQuery);
-                Console.WriteLine(result);
             }
         }
 
@@ -50,8 +49,15 @@ namespace UsersEntrance
             string query = $"SELECT TOP 1 [UserID]  FROM [UsersEntrance].[dbo].[UsersEntrance] where [FirstName] = '{this.Firstname}' and [LastName] = '{this.Lastname}'";
             using (var connection = new SqlConnection(connectionString))
             {
-                this.UserID = connection.Query<int>(query).ElementAt(0);
-                Console.WriteLine(this.UserID);
+                if (connection.Query<int>(query).ToArray().Length!=0)
+                {
+                    this.UserID = connection.Query<int>(query).ElementAt(0);
+                }
+                 else
+                {
+                    Console.WriteLine("User Not found in table");
+                    System.Environment.Exit(1);
+                }
             }
         }
 
