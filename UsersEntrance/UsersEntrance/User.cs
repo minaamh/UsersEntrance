@@ -26,16 +26,48 @@ namespace UsersEntrance
         internal void ChooseGate()
         {
             Console.WriteLine("Please enter the number of the gate you're entering from (1/2):");
-            this.Gate = Int32.Parse(Console.ReadLine());
+            try
+            {
+                this.Gate = Int32.Parse(Console.ReadLine());
+            }
+            catch (System.FormatException ex)
+            {
+                Console.WriteLine("Please input a valid number");
+                Console.WriteLine(ex.Message);
+            }
+             finally
+            {
+                InputGateNumber();
+            }
+
+            InputGateNumber();
+        }
+
+        private void InputGateNumber()
+        {
+            while (this.Gate != 1 && this.Gate != 2)
+            {
+                Console.WriteLine("Please enter a valid gate number (1/2):");
+                this.Gate = Int32.Parse(Console.ReadLine());
+            }
         }
 
         internal void MakeEntry(string connectionString)
         {
             string insertQuery = $"INSERT INTO [UsersEntrance].[dbo].[UsersEntrance]([UserID], [Gate], [TimeStamp]) VALUES ({this.UserID}, {this.Gate}, '{DateTime.Now.ToString("yyyy-MM-ddTHH:mm:sszzz")}')";
 
-            using (var connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Execute(insertQuery);
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Execute(insertQuery);
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine("An Error occured while connecting to the database:");
+                Console.WriteLine(sqlEx.Message);
+                System.Environment.Exit(1);
             }
         }
 
@@ -45,20 +77,31 @@ namespace UsersEntrance
             this.Firstname = Console.ReadLine();
             Console.WriteLine("Please enter your Last Name");
             this.Lastname = Console.ReadLine();
-
             string query = $"SELECT TOP 1 [UserID]  FROM [UsersEntrance].[dbo].[Users] where [FirstName] = '{this.Firstname}' and [LastName] = '{this.Lastname}'";
-            using (var connection = new SqlConnection(connectionString))
+
+            try
             {
-                if (connection.Query<int>(query).ToArray().Length!=0)
+                using (var connection = new SqlConnection(connectionString))
                 {
-                    this.UserID = connection.Query<int>(query).ElementAt(0);
-                }
-                 else
-                {
-                    Console.WriteLine("User Not found in table");
-                    System.Environment.Exit(1);
+                    if (connection.Query<int>(query).ToArray().Length != 0)
+                    {
+                        this.UserID = connection.Query<int>(query).ElementAt(0);
+                    }
+                    else
+                    {
+                        Console.WriteLine("User Not found in table");
+                        System.Environment.Exit(1);
+                    }
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine("An Error occured while connecting to the database:");
+                Console.WriteLine(sqlEx.Message);
+                System.Environment.Exit(1);
+            }
+
+            
         }
 
         public int UserID

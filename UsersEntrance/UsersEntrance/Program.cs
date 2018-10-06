@@ -13,7 +13,7 @@ namespace UsersEntrance
         static void Main(string[] args)
         {
             User u1 = new User();
-            string connectionString = "server=Localhost;Trusted_Connection=true";
+            const string connectionString = "server=Localhost;Trusted_Connection=true";
             u1.ExtractID(connectionString);
             u1.ChooseGate();
             u1.MakeEntry(connectionString);
